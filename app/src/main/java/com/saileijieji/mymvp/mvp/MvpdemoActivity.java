@@ -1,90 +1,86 @@
 package com.saileijieji.mymvp.mvp;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.saileijieji.mymvp.R;
+import com.saileijieji.mymvp.bean.GetMessageCenterBean;
+import com.saileijieji.mymvp.http.ApiManager;
+import com.saileijieji.mymvp.http.HttpUtil;
 import com.saileijieji.mymvp.mvp.base.BaseActivity;
 
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
- * @describe: mymvp
+ * @describe: demo
  * @author: 武梁
  * @date: 2018/5/23 13:58
  * @mailbox: 1034905058@qq.com
  */
 
-public class MvpdemoActivity extends BaseActivity implements MvpView{
+public class MvpdemoActivity extends BaseActivity {
 
-
-    //进度条`
-    ProgressDialog progressDialog;
+    @Bind(R.id.text)
     TextView text;
-    MvpPresenter presenter;
+    @Bind(R.id.btn1)
+    Button btn1;
+    @Bind(R.id.btn2)
+    Button btn2;
+    @Bind(R.id.btn3)
+    Button btn3;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvpdemo);
-        text = (TextView)findViewById(R.id.text);
+        ButterKnife.bind(this);
 
-        progressDialog =new ProgressDialog(this);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("正在加载数据");
-        //初始化Presenter
-        presenter = new MvpPresenter();
-        // 绑定View引用
-        presenter.attachView(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.detachView();
     }
-
-    // button 点击事件调用方法
-    public void getData(View view){
-        presenter.getData("normal");
-    }
-    // button 点击事件调用方法
-    public void getDataForFailure(View view){
-        presenter.getData("failure");
-    }
-    // button 点击事件调用方法
-    public void getDataForError(View view){
-        presenter.getData("error");
-    }
-
 
     @Override
-    public void showLoading() {
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
+    public void showData(int tag, Object data) {
+        super.showData(tag, data);
+        List<GetMessageCenterBean> da = (List<GetMessageCenterBean>) data;
+        switch (tag) {
+            case 0:
+                text.setText("接口0" + da.get(0).getTitle());
+                break;
+            case 1:
+                text.setText("接口1" + da.get(0).getTitle());
+                break;
+            case 2:
+                text.setText("接口2" + da.get(0).getTitle());
+                break;
+            default:
         }
     }
 
-    @Override
-    public void hideLoading() {
-        if (!progressDialog.isShowing()) {
-            progressDialog.dismiss();
+    @OnClick({R.id.btn1, R.id.btn2, R.id.btn3})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn1:
+                presenter.getData(0, MvpdemoActivity.this, false, apiManager.getMessageCenter());
+                break;
+            case R.id.btn2:
+                presenter.getData(1, MvpdemoActivity.this, false, apiManager.getMessageCenter());
+                break;
+            case R.id.btn3:
+                presenter.getData(2, MvpdemoActivity.this, false, apiManager.getMessageCenter());
+                break;
+                default:
         }
-    }
-    @Override
-    public void showData(String data) {
-        text.setText(data);
-    }
-    @Override
-    public void showFailureMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        text.setText(msg);
-    }
-    @Override
-    public void showErrorMessage() {
-        Toast.makeText(this, "网络请求数据出现异常", Toast.LENGTH_SHORT).show();
-        text.setText("网络请求数据出现异常");
     }
 }

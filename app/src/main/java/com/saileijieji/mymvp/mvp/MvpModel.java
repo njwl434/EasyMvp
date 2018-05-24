@@ -1,35 +1,23 @@
 package com.saileijieji.mymvp.mvp;
 
+import android.content.Context;
+
 import com.saileijieji.mymvp.mvp.base.BaseModel;
+import com.saileijieji.mymvp.mvp.base.Callback;
+
+import rx.Observable;
 
 /**
- * @describe: mymvp
+ * @describe: EasyMvp
  * @author: 武梁
- * @date: 2018/5/23 13:38
+ * @date: 2018/5/24 16:56
  * @mailbox: 1034905058@qq.com
  */
 
-public class MvpModel extends BaseModel<String>{
-
+public class MvpModel extends BaseModel {
 
     @Override
-    public void execute(final MvpCallback<String> callback) {
-        new android.os.Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                switch (mParams[0]){
-                    case "normal":
-                        callback.onSuccess("根据参数"+mParams[0]+"的请求网络数据成功");
-                        break;
-                    case "failure":
-                        callback.onFailure("请求失败：参数有误");
-                        break;
-                    case "error":
-                        callback.onError();
-                        break;
-                    default:
-                }
-            }
-        },2000);
+    public void request(Context context, boolean type, Observable api, Callback callback) {
+        super.request(context, type, api, callback);
     }
 }

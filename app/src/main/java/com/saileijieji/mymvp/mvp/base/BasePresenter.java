@@ -1,5 +1,7 @@
 package com.saileijieji.mymvp.mvp.base;
 
+import com.saileijieji.mymvp.http.ApiManager;
+import com.saileijieji.mymvp.http.HttpUtil;
 import com.saileijieji.mymvp.mvp.base.IBaseView;
 
 /**

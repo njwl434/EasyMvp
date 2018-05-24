@@ -13,21 +13,24 @@
         android:layout_weight="1"
         android:text="点击按钮获取网络数据"/>
     <Button
+        android:id="@+id/btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="获取数据【成功】"
+        android:text="获取数据【1】"
         android:onClick="getData"
         />
     <Button
+        android:id="@+id/btn2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="获取数据【失败】"
+        android:text="获取数据【2】"
         android:onClick="getDataForFailure"
         />
     <Button
+        android:id="@+id/btn3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="获取数据【异常】"
+        android:text="获取数据【3】"
         android:onClick="getDataForError"
         />
 </LinearLayout>

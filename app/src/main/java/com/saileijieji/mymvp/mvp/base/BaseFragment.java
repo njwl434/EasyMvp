@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.saileijieji.mymvp.http.ApiManager;
+import com.saileijieji.mymvp.http.HttpUtil;
+import com.saileijieji.mymvp.mvp.MvpPresenter;
+
 /**
  * @describe: fragment基类
  * @author: 武梁
@@ -22,30 +26,23 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     protected abstract void initAllMembersView(Bundle savedInstanceState);
     protected Context mContext;
     protected View mRootView;
-
+    public ApiManager apiManager;
+    public MvpPresenter presenter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView=inflater.inflate(getContentViewId(), container, false);
         this.mContext = getActivity();
         initAllMembersView(savedInstanceState);
+        apiManager = HttpUtil.getInstance(ApiManager.BASE_URL).getApiManager();
+        //初始化Presenter
+        presenter = new MvpPresenter();
+        // 绑定View引用
+        presenter.attachView(this);
         return mRootView;
     }
 
-    @Override
-    public void showData(String data) {
 
-    }
-
-    @Override
-    public void showFailureMessage(String msg) {
-
-    }
-
-    @Override
-    public void showErrorMessage() {
-
-    }
 
     /**
      * 检查activity连接情况
