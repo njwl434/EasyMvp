@@ -1,14 +1,22 @@
 # EasyMvp
 封装了下简单的mvp,持续更新中
+
 本项目是以最简洁的方式敲代码为初衷.
+
 更新列表:
+
 2018/5/23:
+
 新建 mvp 架构
+
 2018/5/24:
+
 封装retrofit 2.0+rxjava 加入mvp架构
+
  
 目前实现起来如mvc一般简单,所有基类全部通用.如个别需求可增加presenter ,model.
 部分 代码:
+
 public class MvpdemoActivity extends BaseActivity {
 
     @Bind(R.id.text)
